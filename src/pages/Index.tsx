@@ -43,37 +43,47 @@ const Index = () => {
   return (
     <div className="flex h-screen bg-gray-50">
       {/* PDF Viewer Section */}
-      <div className="w-1/2 p-6 bg-white border-r border-gray-200">
-        <div className="h-full rounded-lg bg-gray-100 flex items-center justify-center">
+      <div className="w-1/2 p-4 bg-white border-r border-gray-200">
+        <div className="h-full rounded-xl bg-gray-100 flex items-center justify-center overflow-hidden shadow-md">
           <p className="text-gray-500">PDF Viewer Component</p>
         </div>
       </div>
 
       {/* Chat Section */}
-      <div className="w-1/2 flex flex-col bg-white shadow-lg">
-        <ChatHeader fileName="zomato financialreport1.pdf" />
-        
-        <div className="flex-1 overflow-y-auto bg-gray-50 px-4">
-          {messages.length === 0 ? (
-            <div className="h-full flex items-center justify-center text-gray-500">
-              Start a conversation about the PDF
-            </div>
-          ) : (
-            messages.map(message => (
-              <ChatMessage
-                key={message.id}
-                message={message.text}
-                isBot={message.isBot}
-                timestamp={message.timestamp}
-              />
-            ))
-          )}
+      <div className="w-1/2 flex flex-col bg-white">
+        <div className="flex-1 flex flex-col h-full">
+          <ChatHeader fileName="zomato financialreport1.pdf" />
+          
+          <div className="flex-1 overflow-y-auto bg-[#f8fafc] px-4 py-2">
+            {messages.length === 0 ? (
+              <div className="h-full flex flex-col items-center justify-center text-gray-500 space-y-4">
+                <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center">
+                  <svg className="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-4l-4 4-4-4z" />
+                  </svg>
+                </div>
+                <p className="text-lg font-medium">Start a conversation about the PDF</p>
+                <p className="text-sm text-gray-400">Ask questions or request analysis of the document</p>
+              </div>
+            ) : (
+              <div className="space-y-4 py-4">
+                {messages.map(message => (
+                  <ChatMessage
+                    key={message.id}
+                    message={message.text}
+                    isBot={message.isBot}
+                    timestamp={message.timestamp}
+                  />
+                ))}
+              </div>
+            )}
+          </div>
+          
+          <ChatInput
+            onSendMessage={handleSendMessage}
+            onStartRecording={handleStartRecording}
+          />
         </div>
-        
-        <ChatInput
-          onSendMessage={handleSendMessage}
-          onStartRecording={handleStartRecording}
-        />
       </div>
     </div>
   );
