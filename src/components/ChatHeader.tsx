@@ -7,22 +7,24 @@ interface ChatHeaderProps {
 
 const ChatHeader: React.FC<ChatHeaderProps> = ({ fileName }) => {
   return (
-    <div className="flex items-center justify-between p-4 border-b bg-white">
+    <div className="flex items-center justify-between p-4 border-b bg-white shadow-sm">
       <div className="flex items-center space-x-3">
-        <FileText className="w-5 h-5 text-primary" />
+        <div className="p-2 bg-primary/10 rounded-lg">
+          <FileText className="w-5 h-5 text-primary" />
+        </div>
         <h1 className="text-lg font-semibold text-gray-900">{fileName}</h1>
       </div>
       <div className="flex items-center space-x-2">
-        <button className="px-3 py-1.5 text-sm text-primary hover:bg-primary/5 rounded-full transition-colors">
+        <button className="px-3 py-1.5 text-sm font-medium text-primary hover:bg-primary/5 rounded-full transition-all duration-200 hover:scale-105">
           Research
         </button>
-        <button className="px-3 py-1.5 text-sm text-primary hover:bg-primary/5 rounded-full transition-colors">
+        <button className="px-3 py-1.5 text-sm font-medium text-primary hover:bg-primary/5 rounded-full transition-all duration-200 hover:scale-105">
           Summary
         </button>
-        <button className="px-3 py-1.5 text-sm text-primary hover:bg-primary/5 rounded-full transition-colors">
+        <button className="px-3 py-1.5 text-sm font-medium text-primary hover:bg-primary/5 rounded-full transition-all duration-200 hover:scale-105">
           Translate PDF
         </button>
-        <button className="px-3 py-1.5 text-sm bg-primary text-white rounded-full hover:bg-primary-hover transition-colors">
+        <button className="px-4 py-1.5 text-sm font-medium bg-primary text-white rounded-full hover:bg-primary-hover transition-all duration-200 hover:scale-105 shadow-sm">
           Draft an article
         </button>
       </div>
