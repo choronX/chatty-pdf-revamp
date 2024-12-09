@@ -1,5 +1,5 @@
 import React from 'react';
-import { FileText } from 'lucide-react';
+import { FileText, Search, FileSignature, Languages, FileStack } from 'lucide-react';
 
 interface ChatHeaderProps {
   fileName: string;
@@ -17,25 +17,36 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({ fileName }) => {
         </div>
       </div>
       
-      <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-hide">
-        <div className="flex items-center gap-2">
-          <ActionButton variant="secondary">
-            Research
-          </ActionButton>
-          <ActionButton variant="secondary">
-            Summary
-          </ActionButton>
-        </div>
-        <div className="h-6 w-px bg-gray-200 mx-2" />
-        <div className="flex items-center gap-2">
-          <ActionButton variant="secondary">
-            Translate PDF
-          </ActionButton>
-          <ActionButton variant="primary">
-            Draft an article
-          </ActionButton>
-        </div>
-      </div>
+      <nav className="flex items-center justify-start gap-1 overflow-x-auto pb-2 scrollbar-hide">
+        <ActionButton 
+          variant="secondary"
+          icon={<Search className="w-4 h-4" />}
+          tooltip="Research this document"
+        >
+          Research
+        </ActionButton>
+        <ActionButton 
+          variant="secondary"
+          icon={<FileStack className="w-4 h-4" />}
+          tooltip="Get a quick summary"
+        >
+          Summary
+        </ActionButton>
+        <ActionButton 
+          variant="secondary"
+          icon={<Languages className="w-4 h-4" />}
+          tooltip="Translate this document"
+        >
+          Translate
+        </ActionButton>
+        <ActionButton 
+          variant="primary"
+          icon={<FileSignature className="w-4 h-4" />}
+          tooltip="Create a new article"
+        >
+          Draft
+        </ActionButton>
+      </nav>
     </div>
   );
 };
@@ -43,18 +54,29 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({ fileName }) => {
 interface ActionButtonProps {
   children: React.ReactNode;
   variant: 'primary' | 'secondary';
+  icon: React.ReactNode;
+  tooltip: string;
   onClick?: () => void;
 }
 
-const ActionButton: React.FC<ActionButtonProps> = ({ children, variant, onClick }) => {
+const ActionButton: React.FC<ActionButtonProps> = ({ 
+  children, 
+  variant, 
+  icon, 
+  tooltip,
+  onClick 
+}) => {
   return (
     <button
       onClick={onClick}
+      title={tooltip}
       className={`
-        px-4 py-2 rounded-full font-medium 
+        flex items-center gap-1.5
+        px-3 py-1.5 rounded-lg
+        font-medium text-sm
         transition-all duration-200 
-        hover:scale-105 active:scale-95
-        shadow-sm hover:shadow-md
+        hover:scale-102 active:scale-98
+        shadow-sm hover:shadow
         whitespace-nowrap
         ${variant === 'primary' 
           ? 'bg-primary text-white hover:bg-primary-hover' 
@@ -63,6 +85,7 @@ const ActionButton: React.FC<ActionButtonProps> = ({ children, variant, onClick 
         animate-fade-in
       `}
     >
+      {icon}
       {children}
     </button>
   );
