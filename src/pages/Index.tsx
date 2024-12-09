@@ -3,6 +3,7 @@ import ChatHeader from '../components/ChatHeader';
 import ChatInput from '../components/ChatInput';
 import ChatMessage from '../components/ChatMessage';
 import { toast } from 'sonner';
+import { Search, FileSignature, Languages, FileStack } from 'lucide-react';
 
 interface Message {
   id: string;
@@ -44,7 +45,6 @@ const Index = () => {
   const scrollToInput = () => {
     inputRef.current?.focus();
     inputRef.current?.scrollIntoView({ behavior: 'smooth' });
-    // Add a temporary highlight effect to the input
     inputRef.current?.classList.add('highlight-pulse');
     setTimeout(() => {
       inputRef.current?.classList.remove('highlight-pulse');
@@ -54,8 +54,40 @@ const Index = () => {
   return (
     <div className="flex h-screen bg-gray-50">
       {/* PDF Viewer Section */}
-      <div className="w-1/2 p-4">
-        <div className="h-full rounded-xl bg-white flex items-center justify-center overflow-hidden shadow-lg border border-gray-100">
+      <div className="w-1/2 p-4 flex flex-col">
+        <div className="bg-white rounded-lg shadow-sm p-4 mb-4">
+          <div className="flex flex-wrap gap-2">
+            <ActionButton 
+              variant="secondary"
+              icon={<Search className="w-4 h-4" />}
+              tooltip="Research this document"
+            >
+              Research
+            </ActionButton>
+            <ActionButton 
+              variant="secondary"
+              icon={<FileStack className="w-4 h-4" />}
+              tooltip="Get a quick summary"
+            >
+              Summary
+            </ActionButton>
+            <ActionButton 
+              variant="secondary"
+              icon={<Languages className="w-4 h-4" />}
+              tooltip="Translate this document"
+            >
+              Translate
+            </ActionButton>
+            <ActionButton 
+              variant="primary"
+              icon={<FileSignature className="w-4 h-4" />}
+              tooltip="Create a new article"
+            >
+              Draft
+            </ActionButton>
+          </div>
+        </div>
+        <div className="flex-1 rounded-xl bg-white flex items-center justify-center overflow-hidden shadow-lg border border-gray-100">
           <p className="text-gray-500">PDF Viewer Component</p>
         </div>
       </div>
@@ -101,6 +133,46 @@ const Index = () => {
         </div>
       </div>
     </div>
+  );
+};
+
+interface ActionButtonProps {
+  children: React.ReactNode;
+  variant: 'primary' | 'secondary';
+  icon: React.ReactNode;
+  tooltip: string;
+  onClick?: () => void;
+}
+
+const ActionButton: React.FC<ActionButtonProps> = ({ 
+  children, 
+  variant, 
+  icon, 
+  tooltip,
+  onClick 
+}) => {
+  return (
+    <button
+      onClick={onClick}
+      title={tooltip}
+      className={`
+        flex items-center gap-1.5
+        px-3 py-1.5 rounded-lg
+        font-medium text-sm
+        transition-all duration-200 
+        hover:scale-102 active:scale-98
+        shadow-sm hover:shadow
+        whitespace-nowrap
+        ${variant === 'primary' 
+          ? 'bg-primary text-white hover:bg-primary-hover' 
+          : 'bg-gray-50 text-gray-700 hover:bg-gray-100'
+        }
+        animate-fade-in
+      `}
+    >
+      {icon}
+      {children}
+    </button>
   );
 };
 
